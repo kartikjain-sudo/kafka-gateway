@@ -9,13 +9,16 @@ export class GatewayService {
     @Inject('REGISTRATION_SERVICE') private readonly registerClient: ClientKafka,
   ) {}
 
-  async register(registerUser: RegisterUserDto): Promise<boolean> {
+  async register(registerUser: RegisterUserDto) : Promise<any> {
     const { email, dob, username, password } = registerUser;
-    this.registerClient.send('register_user', new RegisterUserEvent(email, dob, username, password),).subscribe((user) => {
-      console.log('Response received', user);
-    }
-    );
-    return true;
+      this.registerClient.send('register_user', new RegisterUserEvent(email, dob, username, password),).subscribe((user) => {
+        console.log('Response received', user);
+        return user;
+      }
+      );
+    // console.log({val1: JSON.stringify(val), val: val.closed})//val.destination.partialObserver});
+    
+    // return true;
   }
 
   // create(createGatewayDto: CreateGatewayDto) {
